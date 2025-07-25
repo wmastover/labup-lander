@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
+import backgroundImage from './background.png';
 
 function App() {
   const [currentStage, setCurrentStage] = useState('initial');
@@ -42,7 +43,7 @@ function App() {
 
       {/* Background Reveal Stage */}
       {currentStage === 'backgroundReveal' && (
-        <div className="background-stage">
+        <div className="background-stage" style={{backgroundImage: `url(${backgroundImage})`}}>
           <div className="content-overlay">
             <h1 className="main-title">Welcome to Lab Up</h1>
             <h2 className="subtitle">Elevating Innovation Through Experimentation</h2>
