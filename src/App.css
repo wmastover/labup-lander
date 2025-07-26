@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -29,10 +31,11 @@
 }
 
 .logo {
-  max-width: 300px;
-  max-height: 300px;
-  width: auto;
-  height: auto;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  object-fit: contain;
   transition: all 0.3s ease;
 }
 
@@ -40,45 +43,98 @@
   transform: scale(1.05);
 }
 
-/* Fade to Black Stage */
-.app.fadeToBlack {
-  background-color: black;
-  animation: fadeToBlack 1s ease-in-out;
-}
-
-@keyframes fadeToBlack {
-  0% {
-    background-color: white;
-  }
-  100% {
-    background-color: black;
-  }
-}
-
-.fade-overlay {
+/* Gradual Fade Overlay */
+.gradual-fade-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: black;
+  background-color: white;
+  animation: gradualFadeIn 2.5s ease-in-out forwards;
+  z-index: 5;
+}
+
+@keyframes gradualFadeIn {
+  0% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.3;
+  }
+  70% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 /* Background Reveal Stage */
 .app.backgroundReveal {
-  animation: burstOfColor 1.5s ease-out;
+  animation: backgroundColorReveal 2s ease-out forwards;
 }
 
-@keyframes burstOfColor {
+@keyframes backgroundColorReveal {
   0% {
-    background-color: black;
-    filter: brightness(0);
+    filter: grayscale(1);
+  }
+  30% {
+    filter: grayscale(1);
   }
   50% {
-    filter: brightness(1.2) saturate(1.3);
+    filter: grayscale(0.8);
+  }
+  65% {
+    filter: grayscale(0.6);
+  }
+  75% {
+    filter: grayscale(0.4);
+  }
+  85% {
+    filter: grayscale(0.2);
   }
   100% {
-    filter: brightness(1) saturate(1);
+    filter: grayscale(0);
+  }
+}
+
+/* White Overlay that fades out */
+.white-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  z-index: 10;
+  animation: whiteOverlayFade 1.5s ease-out forwards;
+}
+
+@keyframes whiteOverlayFade {
+  0% {
+    opacity: 1;
+  }
+  15% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0.8;
+  }
+  35% {
+    opacity: 0.6;
+  }
+  45% {
+    opacity: 0.3;
+  }
+  55% {
+    opacity: 0.1;
+  }
+  65% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
   }
 }
 
@@ -99,10 +155,38 @@
   color: white;
   z-index: 10;
   padding: 2rem;
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 20px;
-  backdrop-filter: blur(10px);
   animation: contentFadeIn 2s ease-in-out 0.5s both;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.content-logo {
+  display: block;
+  width: auto;
+  height: 350px;
+  max-width: 600px;
+  margin: -150px auto 0.5rem auto;
+  filter: drop-shadow(2px 2px 8px rgba(0, 0, 0, 0.8));
+  animation: logoGlow 3s ease-in-out infinite alternate;
+}
+
+.tagline {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: black;
+  text-shadow: none;
+  opacity: 1;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.4;
+  margin: 0;
+}
+
+@keyframes logoGlow {
+  0% {
+    filter: drop-shadow(2px 2px 8px rgba(0, 0, 0, 0.8));
+  }
+  100% {
+    filter: drop-shadow(2px 2px 8px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+  }
 }
 
 @keyframes contentFadeIn {
@@ -117,11 +201,13 @@
 }
 
 .main-title {
-  font-size: 3.5rem;
-  font-weight: bold;
+  font-size: 4rem;
+  font-weight: 800;
   margin-bottom: 1rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
   animation: titleGlow 3s ease-in-out infinite alternate;
+  letter-spacing: -0.02em;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 @keyframes titleGlow {
@@ -136,8 +222,11 @@
 .subtitle {
   font-size: 1.5rem;
   margin-bottom: 2rem;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-  opacity: 0.9;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+  opacity: 0.95;
+  font-weight: 400;
+  line-height: 1.4;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 .cta-button {
@@ -168,8 +257,10 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .logo {
-    max-width: 200px;
-    max-height: 200px;
+    width: 95vw;
+    height: 85vh;
+    max-width: 95vw;
+    max-height: 85vh;
   }
 
   .main-title {
@@ -192,6 +283,13 @@
 }
 
 @media (max-width: 480px) {
+  .logo {
+    width: 98vw;
+    height: 80vh;
+    max-width: 98vw;
+    max-height: 80vh;
+  }
+
   .main-title {
     font-size: 2rem;
   }

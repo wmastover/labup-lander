@@ -5,19 +5,22 @@ import backgroundImage from './background.png';
 function App() {
   const [currentStage, setCurrentStage] = useState('initial');
   const [showAnimation, setShowAnimation] = useState(false);
+  const [startFade, setStartFade] = useState(false);
 
   const handleLogoClick = () => {
     if (currentStage === 'initial') {
       setShowAnimation(true);
       setCurrentStage('animating');
       
-      // After animation duration (adjust based on your GIF duration), start fade sequence
+      // Start gradual fade halfway through animation
       setTimeout(() => {
-        setCurrentStage('fadeToBlack');
-        setTimeout(() => {
-          setCurrentStage('backgroundReveal');
-        }, 1000); // 1 second fade to black
-      }, 3000); // Adjust this based on your animation GIF duration
+        setStartFade(true);
+      }, 1500); // Start fade at 1.5 seconds
+      
+      // Complete fade and reveal background
+      setTimeout(() => {
+        setCurrentStage('backgroundReveal');
+      }, 4000); // Total sequence takes 4 seconds
     }
   };
 
@@ -26,30 +29,44 @@ function App() {
       {/* Initial and Animation Stage */}
       {(currentStage === 'initial' || currentStage === 'animating') && (
         <div className="logo-container">
-          <img
-            src={showAnimation ? "./Lab Up Logo Animation.gif" : "./Lab Up Logo.png"}
-            alt="Lab Up Logo"
-            className="logo"
-            onClick={handleLogoClick}
-            style={{ cursor: currentStage === 'initial' ? 'pointer' : 'default' }}
-          />
+          {showAnimation ? (
+            <video
+              src="./lab up logo animation.mp4"
+              className="logo"
+              autoPlay
+              muted
+              playsInline
+              style={{ cursor: 'default' }}
+            />
+          ) : (
+            <img
+              src="./Lab Up Logo.png"
+              alt="Lab Up Logo"
+              className="logo"
+              onClick={handleLogoClick}
+              style={{ cursor: currentStage === 'initial' ? 'pointer' : 'default' }}
+            />
+          )}
+          {/* Gradual fade overlay */}
+          {startFade && (
+            <div className="gradual-fade-overlay"></div>
+          )}
         </div>
-      )}
-
-      {/* Fade to Black Stage */}
-      {currentStage === 'fadeToBlack' && (
-        <div className="fade-overlay"></div>
       )}
 
       {/* Background Reveal Stage */}
       {currentStage === 'backgroundReveal' && (
         <div className="background-stage" style={{backgroundImage: `url(${backgroundImage})`}}>
+          <div className="white-overlay"></div>
           <div className="content-overlay">
-            <h1 className="main-title">Welcome to Lab Up</h1>
-            <h2 className="subtitle">Elevating Innovation Through Experimentation</h2>
-            <button className="cta-button">
-              Get Started
-            </button>
+            <img 
+              src="./Lab Up Logo.png" 
+              alt="Lab Up Logo" 
+              className="content-logo"
+            />
+            <p className="tagline">
+              grow your business like a startup
+            </p>
           </div>
         </div>
       )}
