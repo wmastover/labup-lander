@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import backgroundImage from './background.png';
 
@@ -7,8 +7,9 @@ function App() {
   const [showAnimation, setShowAnimation] = useState(false);
   const [startFade, setStartFade] = useState(false);
 
-  const handleLogoClick = () => {
-    if (currentStage === 'initial') {
+  // Auto-start animation on component mount
+  useEffect(() => {
+    const startAnimation = () => {
       setShowAnimation(true);
       setCurrentStage('animating');
       
@@ -21,8 +22,13 @@ function App() {
       setTimeout(() => {
         setCurrentStage('backgroundReveal');
       }, 4000); // Total sequence takes 4 seconds
-    }
-  };
+    };
+
+    // Start animation after a brief delay to ensure component is mounted
+    const timer = setTimeout(startAnimation, 100);
+    
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className={`app ${currentStage}`}>
@@ -43,8 +49,7 @@ function App() {
               src="./Lab Up Logo.png"
               alt="Lab Up Logo"
               className="logo"
-              onClick={handleLogoClick}
-              style={{ cursor: currentStage === 'initial' ? 'pointer' : 'default' }}
+              style={{ cursor: 'default' }}
             />
           )}
           {/* Gradual fade overlay */}
