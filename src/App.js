@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import backgroundImage from './background.png';
+import Terminal from './Terminal';
 
 function App() {
   const [currentStage, setCurrentStage] = useState('initial');
@@ -73,6 +74,8 @@ function App() {
               grow your business like a startup
             </p>
           </div>
+          {/* Add the draggable terminal */}
+          <Terminal />
         </div>
       )}
     </div>
